@@ -1,13 +1,29 @@
 package pol.mirr.steps;
 
+import org.openqa.selenium.WebElement;
+import pol.mirr.pages.SearchBlock;
+
 /**
  * Created by Pol Mirr on 05.08.17.
  *
- * Actions of user in search block which is placed on web page
+ * implementation of SearchSteps on SearchBlock
  */
-public interface SearchSteps {
+public class SearchSteps {
+    private SearchBlock searchBlock;
 
-    void inputSearchRequest(String request);
+    public SearchSteps(SearchBlock searchBlock) {
+        this.searchBlock = searchBlock;
+    }
 
-    void clickButtonSearch();
+    public SearchSteps inputSearchRequest(String request) {
+        WebElement inputSearchRequest = searchBlock.getInputSearchRequest();
+        inputSearchRequest.sendKeys(request);
+        return this;
+    }
+
+    public SearchSteps clickButtonSearch() {
+        WebElement buttonSearch = searchBlock.getButtonSearch();
+        buttonSearch.click();
+        return this;
+    }
 }

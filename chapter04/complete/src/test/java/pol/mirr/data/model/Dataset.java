@@ -1,5 +1,10 @@
 package pol.mirr.data.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
 /**
@@ -7,25 +12,11 @@ import java.util.Map;
  *
  * Model dataset of caseID
  */
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Dataset {
-    private Map<String, Object> input;
-    private Map<String, Object> output;
-
-    protected Dataset() {
-    }
-
-    public Dataset(Map<String, Object> input, Map<String, Object> output) {
-        this.input = input;
-        this.output = output;
-    }
-
-    public Map<String, Object> getInput() {
-        return input;
-    }
-
-    public Map<String, Object> getOutput() {
-        return output;
-    }
+    @Getter private Map<String, Object> input;
+    @Getter private Map<String, Object> output;
 
     public String getInput(String key) {
         return input.getOrDefault(key, "").toString();

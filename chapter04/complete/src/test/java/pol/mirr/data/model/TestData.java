@@ -1,5 +1,7 @@
 package pol.mirr.data.model;
 
+import lombok.*;
+
 import java.util.List;
 
 /**
@@ -7,25 +9,11 @@ import java.util.List;
  *
  * Model test data which keep caseID and dataset list
  */
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TestData {
-    private String caseID;
-    private List<Dataset> sets;
-
-    protected TestData() {
-    }
-
-    public TestData(String caseID, List<Dataset> sets) {
-        this.caseID = caseID;
-        this.sets = sets;
-    }
-
-    public String getCaseID() {
-        return caseID;
-    }
-
-    public List<Dataset> getSets() {
-        return sets;
-    }
+    @Getter private String caseID;
+    @Getter private List<Dataset> sets;
 
     @Override
     public String toString() {

@@ -6,24 +6,24 @@ import pol.mirr.pages.SearchBlock;
 /**
  * Created by Pol Mirr on 05.08.17.
  *
- * Implementation SearchSteps interface
+ * implementation of SearchSteps on SearchBlock
  */
-public class SearchStepsImpl implements SearchSteps {
+public class SearchSteps {
     private SearchBlock searchBlock;
 
-    public SearchStepsImpl(SearchBlock searchBlock) {
+    public SearchSteps(SearchBlock searchBlock) {
         this.searchBlock = searchBlock;
     }
 
-    @Override
-    public void inputSearchRequest(String request) {
+    public SearchSteps inputSearchRequest(String request) {
         WebElement inputSearchRequest = searchBlock.getInputSearchRequest();
         inputSearchRequest.sendKeys(request);
+        return this;
     }
 
-    @Override
-    public void clickButtonSearch() {
+    public SearchSteps clickButtonSearch() {
         WebElement buttonSearch = searchBlock.getButtonSearch();
         buttonSearch.click();
+        return this;
     }
 }

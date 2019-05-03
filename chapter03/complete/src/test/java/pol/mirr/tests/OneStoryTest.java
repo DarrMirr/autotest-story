@@ -8,9 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pol.mirr.pages.SearchBlock;
-import pol.mirr.pages.SearchBlockImpl;
+import pol.mirr.pages.selectors.YandexSearchBlockSelectors;
 import pol.mirr.steps.SearchSteps;
-import pol.mirr.steps.SearchStepsImpl;
 import pol.mirr.utils.rules.WebdriverRule;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -22,7 +21,8 @@ import static ru.yandex.qatools.matchers.webdriver.AttributeMatcher.value;
  */
 @RunWith(DataProviderRunner.class)
 public class OneStoryTest {
-    private static final String YA_RU = "https://ya.ru";
+    private static final String YA_RU = "https://yandex.ru";
+    private static final String GOOGLE_RU = "https://www.google.com";
     private SearchBlock searchBlock;
     private SearchSteps searchSteps;
 
@@ -31,8 +31,8 @@ public class OneStoryTest {
 
     @Before
     public void setUp() {
-        searchBlock = new SearchBlockImpl(webdriverRule.getDriver());
-        searchSteps = new SearchStepsImpl(searchBlock);
+        searchBlock = new SearchBlock(webdriverRule.getDriver(), new YandexSearchBlockSelectors());
+        searchSteps = new SearchSteps(searchBlock);
     }
 
     @DataProvider
@@ -49,9 +49,10 @@ public class OneStoryTest {
     @UseDataProvider("getDataset")
     public void test(String requestString) {
         webdriverRule.getUrl(YA_RU);
-        searchSteps.inputSearchRequest(requestString);
-        searchSteps.clickButtonSearch();
-        assertThat(webdriverRule.getCurrentUrlDelay(1), containsString("yandex.ru/search"));
+        searchSteps
+                .inputSearchRequest(requestString)
+                .clickButtonSearch();
+        assertThat(webdriverRule.getCurrentUrlDelay(1), containsString(YA_RU + "/search"));
         assertThat(searchBlock.getInputSearchRequest(), value(containsString(requestString)));
     }
 }

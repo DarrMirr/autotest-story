@@ -1,15 +1,37 @@
 package pol.mirr.pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pol.mirr.pages.selectors.SearchBlockSelectors;
 
 /**
  * Created by Pol Mirr on 05.08.17.
  *
- * Interface describe methods to obtain web elements in search block
+ *  SearchBlock in web pages
  */
-public interface SearchBlock {
+public class SearchBlock {
+    private WebDriver driver;
+    private WebDriverWait driverWait;
+    private SearchBlockSelectors selectors;
 
-    WebElement getInputSearchRequest();
+    public SearchBlock(WebDriver driver, SearchBlockSelectors selectors) {
+        this.driver = driver;
+        this.selectors = selectors;
+        driverWait = new WebDriverWait(driver, 5);
+    }
 
-    WebElement getButtonSearch();
+    public WebElement getInputSearchRequest() {
+        By inputSearch = selectors.getInputSearchRequestSelector();
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(inputSearch));
+        return driver.findElement(inputSearch);
+    }
+
+    public WebElement getButtonSearch() {
+        By buttonSearch = selectors.getButtonSearchSelector();
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(buttonSearch));
+        return driver.findElement(buttonSearch);
+    }
 }

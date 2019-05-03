@@ -1,52 +1,24 @@
 package pol.mirr.data.providers;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pol.mirr.data.model.TestData;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
 
-/**
- * Created by Pol Mirr on 30.08.17.
- *
- * Keep test data which read from file
- */
-public enum TestDataProvider {
-    TEST_PRJ;
-
-    private Map<String, String> testDataStore = new HashMap<>();
+public class TestDataProvider {
+    private static final String TEST_DATA_PATH = "test_data" + File.separator;
     private ObjectMapper mapper = new ObjectMapper();
 
-    TestDataProvider() {
-        mockReadFile();
-    }
-
     public TestData getTestData(String caseID) {
-        String jsonTestData = testDataStore.getOrDefault(caseID, null);
-        if (jsonTestData == null) {
-            throw new RuntimeException("There is no test data for caseID " + caseID);
-        }
-        return mapper(jsonTestData);
-    }
-
-    private TestData mapper(String json) {
-        try {
-            return mapper.readValue(json, TestData.class);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
+        try(InputStream io = Thread.currentThread().getContextClassLoader().getResourceAsStream(TEST_DATA_PATH + caseID + ".json")){
+            if (io != null) {
+                return mapper.readValue(io, TestData.class);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Json mapping error for caseID = " + caseID  +" due to", e);
         }
-        throw new RuntimeException("Json mapping error");
-    }
-
-    private void mockReadFile() {
-        testDataStore.put("1", "{\"caseID\":\"1\",\"sets\":[{\"input\":{\"request\":\"hello world\"},\"output\":{\"request\":\"hello world\"},\"database\":{\"update\":[{\"table\":\"testtable\",\"set\":{\"field2\":\"value2\",\"field3\":\"value3\"},\"where\":{\"field1\":\"value1\"}}],\"delete\":[{\"from\":\"another_table\",\"where\":{\"field1\":\"value1\"}}]}},{\"input\":{\"request\":\"Байкал\"},\"output\":{\"request\":\"Байкал\"},\"database\":{}},{\"input\":{\"request\":\"Исаакиевский собор\"},\"output\":{\"request\":\"Исаакиевский собор\"},\"database\":{}},{\"input\":{\"request\":\"Гагарин\"},\"output\":{\"request\":\"Гагарин\"},\"database\":{}},{\"input\":{\"request\":\"Циолковский\"},\"output\":{\"request\":\"Циолковский\"},\"database\":{}},{\"input\":{\"request\":\"Кижи\"},\"output\":{\"request\":\"Кижи\"},\"database\":{}}]}");
-        testDataStore.put("2", "{\"caseID\":\"2\",\"sets\":[{\"input\":{\"request\":\"Пушкин\"},\"output\":{\"request\":\"Пушкин\"},\"database\":{}},{\"input\":{\"request\":\"Достаевский\"},\"output\":{\"request\":\"Достаевскмй\"},\"database\":{}},{\"input\":{\"request\":\"Ефремов Иван\"},\"output\":{\"request\":\"Ефремов Иван\"},\"database\":{}}]}");
+        throw new IllegalStateException("There is no test data for caseID " + caseID);
     }
 }

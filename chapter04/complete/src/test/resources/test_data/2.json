@@ -1,0 +1,29 @@
+{
+  "caseID": "2",
+  "sets": [
+    {
+      "input": {
+        "request": "Пушкин"
+      },
+      "output": {
+        "request": "Пушкин"
+      }
+    },
+    {
+      "input": {
+        "request": "Достоевский"
+      },
+      "output": {
+        "request": "Достоевскмй"
+      }
+    },
+    {
+      "input": {
+        "request": "Ефремов Иван"
+      },
+      "output": {
+        "request": "Ефремов Иван"
+      }
+    }
+  ]
+}

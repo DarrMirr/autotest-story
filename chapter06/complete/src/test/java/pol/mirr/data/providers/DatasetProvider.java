@@ -15,6 +15,7 @@ import java.util.List;
  * Get TestData from TestDataProvider and return datasets list
  */
 public class DatasetProvider {
+    private static final TestDataProvider DATA_PROVIDER = new TestDataProvider();
 
     private DatasetProvider() {
     }
@@ -26,7 +27,7 @@ public class DatasetProvider {
     }
 
     private static List<List<Object>> getTestDataList(String caseID) {
-        TestData testData = TestDataProvider.TEST_PRJ.getTestData(caseID);
+        TestData testData = DATA_PROVIDER.getTestData(caseID);
         return packageDatasets(testData);
     }
 
@@ -44,7 +45,7 @@ public class DatasetProvider {
     private static String getCaseID(FrameworkMethod testMethod) {
         CaseID annotation = testMethod.getAnnotation(CaseID.class);
         if (annotation == null) {
-            throw new RuntimeException("Annotation CaseID is not present in method " + testMethod);
+            throw new IllegalStateException("Annotation CaseID is not present in method " + testMethod);
         }
         return annotation.value();
     }

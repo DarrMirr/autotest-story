@@ -12,10 +12,9 @@ import pol.mirr.utils.LogService;
  * Class log test events
  */
 public class LoggerRule extends TestWatcherRule {
-    private LogService logService;
+    private LogService logService = LogService.get();
 
     public LoggerRule() {
-        logService = LogService.get();
         logService.generateUUID();
     }
 
@@ -43,13 +42,18 @@ public class LoggerRule extends TestWatcherRule {
         logFinishStatus(frameworkMethod.getName(), "success");
     }
 
+    @Override
+    protected void finished(FrameworkMethod frameworkMethod) {
+        logService.clearUUID();
+    }
+
     public Logger log() {
         return logService.log();
     }
 
     private void logFinishStatus(String methodName, String status) {
-        logService.log().info("Finish : {}", methodName);
         logService.log().info("Test result : {}", status);
+        logService.log().info("Finish : {}", methodName);
     }
 
     private void logDataset(Object[] methodArgs) {
