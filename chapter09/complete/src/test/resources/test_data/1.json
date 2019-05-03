@@ -1,0 +1,80 @@
+{
+  "caseID": "1",
+  "sets": [
+    {
+      "input": {
+        "request": "hello world"
+      },
+      "output": {
+        "request": "hello world"
+      },
+      "database": {
+        "update": [
+          {
+            "table": "testtable",
+            "set": {
+              "field2": "value2",
+              "field3": "value3"
+            },
+            "where": {
+              "field1": "value1"
+            }
+          }
+        ],
+        "delete": [
+          {
+            "from": "another_table",
+            "where": {
+              "field1": "value1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "request": "Байкал"
+      },
+      "output": {
+        "request": "Байкал"
+      },
+      "database": {}
+    },
+    {
+      "input": {
+        "request": "Исаакиевский собор"
+      },
+      "output": {
+        "request": "Исаакиевский собор"
+      },
+      "database": {}
+    },
+    {
+      "input": {
+        "request": "Гагарин"
+      },
+      "output": {
+        "request": "Гагарин"
+      },
+      "database": {}
+    },
+    {
+      "input": {
+        "request": "Циолковский"
+      },
+      "output": {
+        "request": "Циолковский"
+      },
+      "database": {}
+    },
+    {
+      "input": {
+        "request": "Кижи"
+      },
+      "output": {
+        "request": "Кижи"
+      },
+      "database": {}
+    }
+  ]
+}
