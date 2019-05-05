@@ -6,13 +6,16 @@ import pol.mirr.data.model.TestData;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
+
+import static pol.mirr.data.SystemProperties.PATH_TEST_DATA;
 
 public class TestDataProvider {
-    private static final String TEST_DATA_PATH = "test_data" + File.separator;
     private ObjectMapper mapper = new ObjectMapper();
 
     public TestData getTestData(String caseID) {
-        try(InputStream io = Thread.currentThread().getContextClassLoader().getResourceAsStream(TEST_DATA_PATH + caseID + ".json")){
+        String path = Paths.get(PATH_TEST_DATA, caseID + ".json").toString();
+        try(InputStream io = Thread.currentThread().getContextClassLoader().getResourceAsStream(path)){
             if (io != null) {
                 return mapper.readValue(io, TestData.class);
             }
