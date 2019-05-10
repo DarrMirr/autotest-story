@@ -2,14 +2,14 @@ package pol.mirr.utils.rules;
 
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pol.mirr.utils.DesiredCapabilityFactory;
+import ru.stqa.selenium.factory.WebDriverPool;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -26,26 +26,31 @@ public class WebdriverRule extends ExternalResource {
     private static final Logger logger = LoggerFactory.getLogger(WebdriverRule.class);
     private WebDriver driver;
     private WebDriverWait driverWait;
-    private DesiredCapabilities capabilities;
+
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(WebDriverPool.DEFAULT::dismissAll));
+    }
 
     public WebdriverRule() {
         this(BROWSER);
     }
 
     public WebdriverRule(String browserName) {
-        capabilities = DesiredCapabilityFactory.get(browserName);
+        try{
+            driver = WebDriverPool.DEFAULT.getDriver(new URL(URL_SELENIUM_SERVER), DesiredCapabilityFactory.get(browserName));
+            driverWait = new WebDriverWait(driver, 5);
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     protected void before() throws Throwable {
-        driver = new RemoteWebDriver(new URL(URL_SELENIUM_SERVER), capabilities);
         driver.manage().window().maximize();
-        driverWait = new WebDriverWait(driver, 5);
     }
 
     @Override
     protected void after() {
-        driver.quit();
     }
 
     public void getUrlAndWait(String url, int timeout) {

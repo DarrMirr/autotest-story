@@ -16,6 +16,8 @@ public class SystemProperties {
 
     public static final String PATH_TEST_DATA = System.getProperty("path_test_data", "test_data" + File.separator);
 
+    public static final String PATH_SCREENSHOT_DIR = System.getProperty("path_screenshot_dir", "screenshots");
+
     private SystemProperties() {
     }
 }

@@ -12,10 +12,10 @@
     },
     {
       "input": {
-        "request": "Достаевский"
+        "request": "Достоевский"
       },
       "output": {
-        "request": "Достаевскмй"
+        "request": "Достоевский"
       },
       "database": {}
     },

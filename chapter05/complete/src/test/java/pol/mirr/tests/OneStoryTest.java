@@ -5,6 +5,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import pol.mirr.data.model.Dataset;
 import pol.mirr.data.providers.DatasetProvider;
@@ -13,6 +14,7 @@ import pol.mirr.pages.selectors.YandexSearchBlockSelectors;
 import pol.mirr.steps.SearchSteps;
 import pol.mirr.utils.CaseID;
 import pol.mirr.utils.rules.DatabaseRule;
+import pol.mirr.utils.rules.WebScreenshotRule;
 import pol.mirr.utils.rules.WebdriverRule;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -29,8 +31,12 @@ public class OneStoryTest {
     private SearchBlock searchBlock;
     private SearchSteps searchSteps;
 
-    @Rule
     public WebdriverRule webdriverRule = new WebdriverRule();
+
+    @Rule
+    public RuleChain webRuleChain = RuleChain
+                                        .outerRule(webdriverRule)
+                                        .around(new WebScreenshotRule(webdriverRule.getDriver()));
 
     @Rule
     public DatabaseRule databaseRule = new DatabaseRule();

@@ -1,0 +1,53 @@
+{
+  "caseID": "1",
+  "sets": [
+    {
+      "input": {
+        "request": "hello world"
+      },
+      "output": {
+        "request": "hello world"
+      }
+    },
+    {
+      "input": {
+        "request": "Байкал"
+      },
+      "output": {
+        "request": "Байкал"
+      }
+    },
+    {
+      "input": {
+        "request": "Исаакиевский собор"
+      },
+      "output": {
+        "request": "Исаакиевский собор"
+      }
+    },
+    {
+      "input": {
+        "request": "Гагарин"
+      },
+      "output": {
+        "request": "Гагарин"
+      }
+    },
+    {
+      "input": {
+        "request": "Циолковский"
+      },
+      "output": {
+        "request": "Циолковский"
+      }
+    },
+    {
+      "input": {
+        "request": "Кижи"
+      },
+      "output": {
+        "request": "Кижи"
+      }
+    }
+  ]
+}

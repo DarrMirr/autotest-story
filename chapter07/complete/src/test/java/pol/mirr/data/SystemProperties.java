@@ -16,6 +16,8 @@ public class SystemProperties {
 
     public static final String PATH_TEST_DATA = System.getProperty("path_test_data", "test_data" + File.separator);
 
+    public static final String PATH_SCREENSHOT_DIR = System.getProperty("path_screenshot_dir", "screenshots");
+
     public static final String TESTRUN_ID = System.getProperty("testrun_id", null);
     public static final String NEW_TESTRUN_NAME = System.getProperty("new_run_name", null);
     public static final String PROJECT_ID = System.getProperty("project_id", null);

@@ -11,9 +11,7 @@ import pol.mirr.utils.CaseID;
 import pol.mirr.utils.LogService;
 import pol.mirr.utils.case_providers.CaseProvider;
 import pol.mirr.utils.case_providers.CaseProviders;
-import pol.mirr.utils.testcase_manager.TestCaseManager;
 import pol.mirr.utils.testrunner_helpers.filters.TestCaseFilter;
-import pol.mirr.utils.testrunner_helpers.listeners.CollectResultListener;
 import pol.mirr.utils.testrunner_helpers.listeners.TestRunnerListener;
 import pol.mirr.utils.testrunner_helpers.parallel_computer.ExecutorsFactory;
 import pol.mirr.utils.testrunner_helpers.parallel_computer.TestParallelComputer;
@@ -52,15 +50,15 @@ public class TestRunner {
             Request request =  Request
                     .classes(parallelComputer, testClasses.toArray(new Class[0]))
                     .filterWith(new TestCaseFilter(caseIDs));
-            List<RunListener> runListenerList = getRunListener(caseIDs);
+            RunListener runListener = new TestRunnerListener(logService, new ArrayList<>(caseIDs));
 
-            runTests(request, runListenerList);
+            runTests(request, runListener);
         }
     }
 
-    private void runTests(Request request, List<RunListener> runListenerList) {
+    private void runTests(Request request, RunListener runListener) {
         JUnitCore jUnitCore = new JUnitCore();
-        runListenerList.forEach(jUnitCore::addListener);
+        jUnitCore.addListener(runListener);
         jUnitCore.run(request);
     }
 
@@ -84,15 +82,5 @@ public class TestRunner {
         ExecutorService executorService = ExecutorsFactory.getFixedThreadPool();
         TestRunnerScheduler runnerScheduler = new TestRunnerScheduler(executorService, currentThreadID);
         return new TestParallelComputer(runnerScheduler);
-    }
-
-    private List<RunListener> getRunListener(List<String> caseIDs) {
-        List<RunListener> runListenerList = new ArrayList<>();
-        runListenerList.add(new TestRunnerListener(logService, new ArrayList<>(caseIDs)));
-        if (caseProvider instanceof TestCaseManager) {
-            TestCaseManager testCaseManager = (TestCaseManager) caseProvider;
-            runListenerList.add(new CollectResultListener(testCaseManager, logService));
-        }
-        return runListenerList;
     }
 }
