@@ -1,8 +1,8 @@
 .idea/
 target/
 ScreenShots/*
+screenshots/*
 allure-report/
-
 
 # Created by https://www.gitignore.io
 
