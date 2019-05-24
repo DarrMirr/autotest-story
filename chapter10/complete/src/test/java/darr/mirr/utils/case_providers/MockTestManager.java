@@ -25,9 +25,8 @@ public class MockTestManager implements CaseProvider, TestCaseManager {
     }
 
     @Override
-    public String addResult(Object result) {
+    public void addResult(Object result, String attachmentPath) {
         logger.info("------- TestCaseManager is adding result to queue");
         logger.info("------- Added item queue: {}", result.toString());
-        return "Ok";
     }
 }

@@ -35,6 +35,7 @@ public class WebScreenshotRule extends TestWatcher {
                                         .andThen(this::toFileName)
                                         .apply(description);
         Path target = Paths.get(PATH_SCREENSHOT_DIR, LocalDate.now().toString());
+        description.addChild(Description.createSuiteDescription(target.resolve(screenshotFileName).toString()));
         takeScreenshot()
                 .ifPresent(screenshot -> save(screenshot, target, screenshotFileName));
     }

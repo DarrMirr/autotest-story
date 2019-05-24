@@ -18,12 +18,16 @@ public class SystemProperties {
 
     public static final String PATH_SCREENSHOT_DIR = System.getProperty("path_screenshot_dir", "screenshots");
 
-    public static final String TESTRUN_ID = System.getProperty("testrun_id", null);
+    public static final String SUITE_ID = System.getProperty("suite_id", null);
     public static final String NEW_TESTRUN_NAME = System.getProperty("new_run_name", null);
     public static final String PROJECT_ID = System.getProperty("project_id", null);
     public static final String CASE_ID_PROPERTY = System.getProperty("case_id", null);
 
     public static final String THREAD_COUNT = System.getProperty("thread_count", null);
+
+    public static final String TEST_RAIL_KEY = "private_key";
+    public static final String TEST_RAIL_URL = "http://testrail_url";
+    public static final String TEST_RAIL_USERNAME = "user@name";
 
     private SystemProperties() {
     }

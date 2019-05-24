@@ -23,7 +23,7 @@ public class CaseProviders {
     }
 
     private static boolean isPresentTestRailProperties() {
-        return TESTRUN_ID != null && NEW_TESTRUN_NAME != null && PROJECT_ID != null;
+        return SUITE_ID != null && NEW_TESTRUN_NAME != null && PROJECT_ID != null;
     }
 
     private static boolean isPresentCaseidProperty() {

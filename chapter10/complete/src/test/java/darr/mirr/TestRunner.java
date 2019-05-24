@@ -91,7 +91,7 @@ public class TestRunner {
         runListenerList.add(new TestRunnerListener(logService, new ArrayList<>(caseIDs)));
         if (caseProvider instanceof TestCaseManager) {
             TestCaseManager testCaseManager = (TestCaseManager) caseProvider;
-            runListenerList.add(new CollectResultListener(testCaseManager, logService));
+            runListenerList.add(new CollectResultListener(testCaseManager));
         }
         return runListenerList;
     }
